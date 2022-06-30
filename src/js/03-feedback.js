@@ -21,7 +21,7 @@ const onSaveFormData = e => {
   setLocalStorage(KEY_FORM_LOCALSTORAGE, formData);
 };
 
-form.addEventListener('input', onSaveFormData);
+form.addEventListener('input', throttle(onSaveFormData, 500));
 
 const getLocalStorage = key => {
   try {
@@ -33,11 +33,11 @@ const getLocalStorage = key => {
 };
 
 const formFromStorage = getLocalStorage(KEY_FORM_LOCALSTORAGE);
-formData = formFromStorage;
 
 if (formFromStorage) {
   for (const key in formFromStorage) {
     form.elements[key].value = formFromStorage[key];
+    formData[key] = formFromStorage[key];
   }
 }
 
